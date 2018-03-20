@@ -1,0 +1,61 @@
+#commad module:not  proceded throush shell
+    #ansible server    -a "/sbin/reboot" 
+    ansible x86_debian -a "/bin/echo "hello world""  
+    ansible x86_debian -a "/bin/echo "hello world""  -f 10 -u root -k
+    ansible x86_debian -a "cd /home; ls " -u root -k
+
+#raw module:
+
+   ansible x86_debian -m raw -a "/bin/echo hello world"  
+   ansible x86_debian -m raw -a "cd /home; ls " -u root -k
+
+#shell module:
+
+   ansible x86_debian  -m shell  -a "cd /home; ls " -u root -k
+
+#copy authorized key   
+
+ansible kernel -m authorized_key -a "user=root key='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjM15sSFviKLbEz+UH9wR5OSOf2TzNvUT/YTl1TY5u0O13trcC2DhHDe3Gd9HMRC+SNoP2wha2YUjBIDKf5GprtCCAG+1KCfYSdGthqe7QD7SqoNcyl4fI8GWOv5aptJ3DKT9Qm6lqc6Wn/UHFdDlGK3d4PS04UegG3eRf+ISB73do+xDGqGrYZbEdJmPNm4NQ1uRsHY0Fqrsid4qBmO7jLE1owFzZk14UCFZCZh7hOt6ptr4ILpNzViR18Q1Q7GI2ny0qzADWPh2nte1wBCPHTAXpEXCLy0D63lUqGmjvqIm3LbJ3DgilJnIiOzdQwhlToDTYRKfJNMlwNRiUPpxj root@localhost.localdomain'" -u root -k 
+
+#File  Module:
+ansible kernel -m file  -a "dest=/tmp/dummy  state=directory owner=root group=root mode=0555" 
+ansible kernel -m file  -a "dest=/tmp/dummy  state=touch"
+ansible kernel -m file  -a "dest=/tmp/dummy  state=absent"
+  
+#Copy module:
+
+ansible kernel  -m  copy  -a "src=/etc/hosts/ dest=/tmp/dummy"
+
+#service module:
+ansible kernel  -m  apt   -a "update_cache=true"
+ansible kernel  -m  apt   -a "name=ntp state=present"
+ansible kernel  -m  apt   -a "name=ntp state=latest"
+ansible kernel  -m  apt   -a "name=ntp state=absent"
+ansible kernel  -m  apt   -a "name=ntp,apache2 state=latest"
+ansible kernel  -m service -a "name=apache2 state=started"
+ansible kernel  -m service -a "name=apache2 state=stopped"
+ansible kernel  -m service -a "name=apache2 state=reloaded"
+
+#user module:
+
+ansible all -m user -a "name=ipbuild state=absent"
+ansible all -m user -a "name=ipbuild password=******" 
+
+#gathering facts:
+
+ansible all -m setup
+ansible kernel -m setup -a "filter=ansible_os*"
+
+#git module:
+ansible kernel -m git -a "repo=http://Hari.Mopuri:<passwd>@10.12.3.45/gerrit/ocnos-package dest=/home/checkout version=ocnos-master-AG-8032"
+
+#docker module
+ansible kernel -m docker  -a "name=ansible image=debian:8.2 state=present"
+ansible kernel -m docker  -a "name=ansible image=debian:8.2 state=started command='sleep 1d'"
+ansible kernel -m docker  -a "name=ansible image=debian:8.2 state=absent"
+ansible kernel -m docker  -a "pull=10.12.40.84:5000/debian:ocnos-docker-1.0"
+
+Background Operations:
+ansible all -B 3600 -P 0 -a "/usr/bin/long_running_operation --do-stuff"
+ansible web1.example.com -m async_status -a "jid=488359678239.2844"
+ansible all -B 1800 -P 60 -a "/usr/bin/long_running_operation --do-stuff"
