@@ -1,0 +1,5 @@
+ssh commond:
+ssh -o ConnectTimeout=600 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no <IP> <commond>
+ssh -o ConnectTimeout=1200 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o "BatchMode yes" <IP> "cd / && tar -zxf name-*.tar.gz"
+example:
+ssh -o ConnectTimeout=600 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no 192.168.2.2 "/bin/ls"
