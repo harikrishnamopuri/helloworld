@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+   - name: echo hellow world
+     shell: "echo hello world"
+     register: op
+   - name: print output
+     debug: msg="{{ op.stdout_lines }}"
+

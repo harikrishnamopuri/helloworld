@@ -1,0 +1,10 @@
+---
+- hosts: '{{ hosts }}'
+  tasks:
+  - name: updating apt cache 
+    apt: update_cache=yes
+  - name: installing {{ package }} package
+    apt: name={{ item }}  state=latest
+    with_items:
+     - "{{ package }}"
+

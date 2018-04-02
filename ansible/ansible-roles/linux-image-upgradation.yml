@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  gather_facts: True
+  tasks:
+  - name : printing hostnme
+    debug : msg="{{ inventory_hostname }}"  
+  roles:
+  - linux-image-upgradation
+

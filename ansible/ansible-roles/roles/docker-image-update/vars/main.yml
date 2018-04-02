@@ -1,0 +1,3 @@
+---
+# vars file for docker-image-update
+docker_repo: "10.12.40.84/debian:ocnos-docker-1.1"

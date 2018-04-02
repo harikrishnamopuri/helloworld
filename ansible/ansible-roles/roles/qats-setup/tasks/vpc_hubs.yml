@@ -1,0 +1,26 @@
+- name : setting vpc name
+  set_fact: vpc_name={{base_vpc_name}}{{ vpc_no }}
+
+- name : setting vpc number
+  set_fact: vpc_number={{ vpc_no }}
+
+- name : print vpc number
+  debug: msg=" vpc number {{vpc_no}}"
+
+- name : removing existing nic cards
+  shell: "ifconfig {{ vpc_name }}_eth{{ item }}_br down ; sleep 1;\
+          ifconfig {{ vpc_name }}_eth{{ item }}_br down ; sleep 1;\
+          brctl delbr {{ vpc_name }}_eth{{ item }}_br; sleep 1;\
+          brctl delbr {{ vpc_name }}_eth{{ item }}_br; sleep 1"
+  ignore_errors: True
+  with_sequence: start=0 end={{ number_of_nic_cards }}
+
+- name : adding additional nic cards
+  shell:  " brctl addbr {{ vpc_name }}_eth{{ item }}_br;\
+            brctl stp {{ vpc_name }}_eth{{ item }}_br off;\
+            ifconfig {{ vpc_name }}_eth{{ item }}_br up  ;\
+            ifconfig {{ vpc_name }}_eth{{ item }}_br up;\
+            ip tuntap add name {{vpc_number}}e{{ item }} mode tap;\
+            brctl addif {{ vpc_name }}_eth{{ item }}_br {{vpc_number}}e{{ item }}"
+  with_sequence: start=1 end={{ number_of_nic_cards }}
+

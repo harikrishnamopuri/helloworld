@@ -1,0 +1,13 @@
+---
+- name : running mount command 
+  shell: "mount -a" 
+  ignore_errors: True
+- name: gather all nfs servers from fstab file
+  shell: "cat /etc/fstab | grep -E '^10.' | awk '{print $1}'"
+  register: nfs_server_list
+- name: checking all nfs servers mounted or not
+  shell: "df -h | grep {{ item }}"
+  with_items:
+     - "{{ nfs_server_list.stdout_lines }}"
+     
+      

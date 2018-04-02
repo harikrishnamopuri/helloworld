@@ -1,0 +1,16 @@
+---
+- name: hostname
+  debug: msg="{{ inventory_hostname }} {{ image_version }}"
+- name: deb package installation
+  shell:  "uname -a |  grep {{ image_version }}"
+  register: dpkg_result
+  ignore_errors: True
+
+- name: print result
+  debug: msg="linux-image is already installed and booted with latest image"
+  when: dpkg_result.rc==0
+
+- name : exiting play book
+  meta : end_play
+  when: dpkg_result.rc==0
+  

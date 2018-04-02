@@ -1,0 +1,89 @@
+- name: get list of vms
+  virt: command=list_vms
+  register: virt_vms
+
+- name: copy image from base image
+  copy: 
+    src: "/tmp/new_image/{{ base_image }}.img" 
+    dest: "{{disk_path}}/{{ base_vpc_name | upper }}{{vpc_no}}.img" 
+    remote_src: yes
+
+- name: create temporary mount directory in agent
+  file:  path="/tmp/new_image/mount" state=directory mode=0755
+
+- name : un mount image
+  shell: "umount /tmp/new_image/mount"
+  ignore_errors: true
+
+- name : mount  image 
+  shell: "mount -t auto -o loop,offset=$((512*2048)) \"{{disk_path}}/{{ base_vpc_name | upper }}{{vpc_no}}.img\" \
+          /tmp/new_image/mount"
+  
+- name : get IP address
+  set_fact: IP="[ {{ base_vpc_name | upper }}{{ vpc_no }}_IP ]"
+
+
+- name : format IP address
+  set_fact: IP="{{ IP | to_json | replace('[', '')  |  replace(']', '') | replace('\"', '') }}"
+
+
+- name: print IP
+  debug: msg="{{ IP }} "
+
+- name: insert/update eth0 static configuration 
+  blockinfile:
+    destfile: /tmp/new_image/mount/etc/network/interfaces
+    block: |
+      auto eth0
+      iface eth0 inet static
+          address {{ IP }}
+          netmask {{ NETMASK }}
+          network {{ NETWORK }}
+          gateway {{ GATEWAY }}
+  when: static_ip==true
+
+
+- name: insert/update eth0 dhcp configuration
+  blockinfile:
+    destfile: /tmp/new_image/mount/etc/network/interfaces
+    block: |
+         auto eth0
+         iface eth0 inet dhcp
+  when: static_ip==false
+
+- name : un mount image
+  shell: "umount /tmp/new_image/mount"
+  
+
+- name: print path
+  debug: msg="{{disk_path}}/{{ base_vpc_name | upper }}{{vpc_no}}.img"
+
+- name: create vm
+  shell: "virt-install -n {{ base_vpc_name | upper }}{{vpc_no}}
+           -r {{ memory }}
+           --vcpus {{ cpus }}
+           --os-type {{ os_type }}
+           --graphics vnc
+           --virt-type {{ virt_type }}
+           --disk path={{disk_path}}/{{ base_vpc_name | upper }}{{vpc_no}}.img
+           --import
+           --noautoconsole
+           --network {{ nic }}"
+          
+  when:
+    - ( '{{ base_vpc_name | upper }}{{vpc_no}}' not in virt_vms.list_vms)
+  
+
+- name: get guest info
+  virt: command=info
+  register: virt_info
+
+
+- name: make sure all vms are running
+  virt: name={{ base_vpc_name | upper  }}{{ vpc_no }} command=start
+  when: virt_info[ '{{ base_vpc_name | upper }}{{vpc_no}}' ]['state'] != 'running'
+
+#- name: wait for interface to come up
+#  shell: "sleep 30s;ping -c5 {{ IP }} "
+#  async: 300
+#  poll: 5

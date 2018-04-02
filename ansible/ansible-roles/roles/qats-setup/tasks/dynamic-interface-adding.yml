@@ -1,0 +1,19 @@
+- name : setting defualt nic
+  set_fact: vpc_name={{base_vpc_name}}{{ vpc_no }}
+
+
+- name : print interface
+  debug: msg="vpc name {{ vpc_name }}"
+
+
+- name : setting defualt nic
+  set_fact: nic="bridge={{ default_bridge }},target={{ vpc_name }}_eth0,model=virtio"
+
+
+
+- name : adding additional nic cards
+  set_fact: nic="{{ nic }}  --network bridge={{ vpc_name }}_eth{{ item }}_br,target={{ vpc_name }}_eth{{ item }},model=virtio"
+  with_sequence: start=1 end={{ number_of_nic_cards }}
+      
+- name : print interface
+  debug: msg="--network {{ nic }}"            

@@ -1,0 +1,12 @@
+---
+- hosts: '{{ hosts }}'
+  tasks:
+  - name: command excuting on shell
+    shell:  " {{ item }}"
+    register: result
+    with_items:
+     - "{{ command }}"
+  - name: print result
+    debug: msg="failed"
+    when:  result|success
+

@@ -1,0 +1,3 @@
+---
+# tasks file for docker-image-update
+- include: docker-pull.yml

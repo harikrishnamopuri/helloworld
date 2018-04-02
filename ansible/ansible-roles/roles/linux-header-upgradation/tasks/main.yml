@@ -1,0 +1,14 @@
+---
+# tasks file for linux-header-upgradation
+- include: header-roleback.yml
+  when: header_roleback==true
+
+- include: check-header-version.yml
+  when : header_upgrade==true
+
+- include: gather-sys-info.yml
+  when : dpkg_result.rc==1
+
+- include: header-upgrade.yml
+  when: dpkg_result.rc==1
+

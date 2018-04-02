@@ -1,0 +1,8 @@
+---
+# tasks file for qats-setup
+- include: libvirtd-install.yml
+- include: vpc_hubs.yml
+- include: dynamic-interface-adding.yml
+- include: create-vpcs-in-server.yml
+  
+

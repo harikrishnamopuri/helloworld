@@ -1,0 +1,14 @@
+---
+- name: deb package installation
+  shell:  "dpkg -l | grep linux-header | grep {{ header_version }}"
+  register: dpkg_result
+  ignore_errors: True
+
+- name: print result
+  debug: msg="deb packag already installed"
+  when: dpkg_result.rc==0
+
+- name : exiting play book packag already installed
+  meta : end_play
+  when: dpkg_result.rc==0
+  
