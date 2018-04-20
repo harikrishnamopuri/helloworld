@@ -1,0 +1,10 @@
+#!/bin/bash
+cd /root/.jenkins/plugins
+while read name
+do
+  echo "plugin ---- $name"
+  wget http://mirrors.jenkins-ci.org/plugins/$name/latest/$name.hpi
+done < jenkin-plugins
+
+
+
