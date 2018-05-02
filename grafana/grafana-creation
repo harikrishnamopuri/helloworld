@@ -1,0 +1,10 @@
+
+yum install  https://grafanarel.s3.amazonaws.com/builds/grafana-4.1.2-1486989747.x86_64.rpm
+systemctl daemon-reload
+systemctl enable grafana-server.service
+systemctl start grafana-server.service
+grafana-cli plugins list-remote
+grafana-cli plugins install alexanderzobnin-zabbix-app
+systemctl restart grafana-server.service
+
+

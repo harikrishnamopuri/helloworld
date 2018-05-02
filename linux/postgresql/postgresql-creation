@@ -1,0 +1,62 @@
+yum install postgresql-server postgresql-contrib
+postgresql-setup initdb
+
+vi /var/lib/pgsql/data/pg_hba.conf
+Find the lines that looks like this, near the bottom of the file:
+
+pg_hba.conf excerpt (original)
+host    all             all             127.0.0.1/32            ident
+host    all             all             ::1/128                 ident
+Then replace "ident" with "md5", so they look like this:
+
+pg_hba.conf excerpt (updated)
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+
+
+
+
+systemctl restart postgresql
+systemctl enable postgresql
+
+
+
+useradd grafana
+passwd grafana/ grafana123
+
+su - postgres
+CREATE DATABASE grafana;
+CREATE USER grafana WITH PASSWORD 'grafana123';
+GRANT ALL PRIVILEGES ON DATABASE grafana to grafana;
+
+
+
+https://www.cyberciti.biz/faq/howto-add-postgresql-user-account/
+
+
+
+
+server = ldap://company.com
+       accountBase = DC=company,DC=com
+       groupBase = DC=company,DC=com
+       username = mail@company.com
+       password = mail@123
+
+
+
+useradd Hari
+passwd  hari
+CREATE DATABASE krishna;
+CREATE USER ram WITH PASSWORD 'hari';
+GRANT ALL PRIVILEGES ON DATABASE grafana to grafana;
+
+
+zabbix:
+useradd zabbix
+passwd zabbix/ zabbix123
+
+su - postgres
+CREATE DATABASE zabbix;
+CREATE USER zabbix WITH PASSWORD 'zabbix123';
+GRANT ALL PRIVILEGES ON DATABASE grafana to grafana;
+
