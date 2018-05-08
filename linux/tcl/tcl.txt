@@ -1,0 +1,354 @@
+https://gist.github.com/Fluidbyte/6294378
+
+
+TCL :
+
+TCL is a high-level, general-purpose, interpreted, dynamic programming language.
+
+
+Basic concepts:
+
+1.Variables
+2.lists
+3.strings
+4.arrays
+5.conditions
+6.loops
+7.procedures
+8.files
+
+
+Variables:
+
+All data types can be manipulated as strings, including source code. Internally, variables have types like integer and double, but converting is purely automatic.
+
+Variable declaration :
+
+set  name "Ram"
+set  x 10
+set  sum "1+2+3+4"
+
+#getting input from user:
+
+puts "Enter a value: "
+gets stdin someVar
+puts "You entered: $someVar."
+
+
+puts $name
+puts $x
+puts [expr $x + 10 ];
+puts [expr $sum ]
+
+
+variable declarion with quotes:
+
+set x "10+20"
+set y '10+20'
+set z {10+20}
+
+"",'',{}  this quotes and curly braceses will be used for declaring strings and expressions
+
+""  will allow string manupulation,variable expansion
+''  will not  allow string manupulation,variable expansion
+{}  will be treated as constant string
+
+
+Variable scope:
+
+The scope in which a variable will be evaluated can be changed with the global and upvar commands.
+
+The global command will cause a variable in a local scope (inside a procedure) to refer to the global variable of that name.
+
+The upvar command is similar. It "ties" the name of a variable in the current scope to a variable in a different scope.
+
+
+The syntax for upvar is:
+
+upvar ?level? otherVar1 myVar1 ?otherVar2 myVar2? ... ?otherVarN myVarN?
+
+
+If the level number is preceded by a # symbol, then it references that many levels down from the global scope. If level is #0, then the reference is to a variable at the global level.
+
+
+**You should avoid using global variables if possible.**
+
+
+
+Link: https://www.tcl.tk/man/tcl8.5/tutorial/Tcl13.html
+
+
+2.lists :
+
+List is nothing but a group of elements. A group of words either using double quotes or curly braces can be used to represent a simple list.
+
+set myVariable {red green blue}
+
+#printing  list
+puts $myVariable
+
+#printing particulra index
+puts [lindex $myVariable 1]
+
+#finding length
+puts [llength $myVariable]
+
+
+#replacing particluar value
+set myVariable [lreplace $myVariable 2 2 black ] ; # replacing blue with black
+
+
+#adding one element after red
+set myVariable [lreplace $myVariable 0 0 read yellow ] 
+
+#removing one element from list
+
+set myVariable [lreplace $myVariable 0 0] 
+
+
+#removing certain range of elemets from list
+
+set myVariable [lreplace $myVariable 2 3] 
+
+
+3. strings :
+
+set myVariable hello
+set myVariable "hello world"
+set myVariable {hello world}
+puts $myVariable
+puts "Hello\tWorld\n\nTutorialspoint";
+
+
+string commands:
+
+compare string1 string2 : Compares string1 and string2 lexographically. Returns 0 if equal, -1 if string1 comes before string2, else 1.
+index string index : Returns the character at index.
+length string : Returns the length of string.
+match pattern string : Returns 1 if the string matches the pattern.
+range string index1 index2 : Return the range of characters in string from index1 to index2.
+tolower string : Returns the lowercase string.
+toupper string : Returns the uppercase string.
+trim string ?trimcharacters? : Removes trimcharacters in both ends of string. The default trimcharacters is whitespace.
+
+
+
+
+4.arrays : An array is a systematic arrangement of a group of elements using indices. 
+set ArrayName(Index) value
+Associative Arrays : Associative arrays have an index that is not necessarily a number, and can be sparsely populated. 
+[array size variablename]
+[array names variablename]
+
+
+
+Dictionary : A dictionary is an arrangement for mapping values to keys. The syntax for the conventional dictionary is shown below.
+
+dict set dictname key value or dict create dictname key1 value1 key2 value2 .. keyn valuen
+
+ex: 
+dict set colours  colour1 red 
+puts $colours
+
+set colours [dict create colour1 "black" colour2 "white"]
+puts $colours
+
+[dict get $dictname $keyname]
+[dict size dictname]
+[dict keys $dictname]
+[dict values $dictname]
+[dict exists $dictname $key]
+
+set colours [dict create colour1 "black" colour2 "white"]
+foreach item [dict keys $colours] {
+   set value [dict get $colours $item]
+   puts $value
+}
+
+
+
+conditions : 
+
+1)
+ if { } {
+
+
+  }
+
+2)
+
+ if { } {
+
+
+  } else 
+
+
+  }
+
+3)
+
+ if { } {
+
+
+  } elseif { } {
+
+
+  } else {
+
+  }
+
+4) 
+
+ if { } {
+
+    if { } {
+
+
+  }
+
+  } else 
+ 
+   if { } {
+
+
+  } else {
+  }
+
+
+  }
+
+
+
+ 
+switch : A switch statement allows a variable to be tested for equality against a list of values.
+
+1) switch switchingString {
+   matchString1 {
+      body1
+   }
+   matchString2 {
+      body2
+   }
+...
+   matchStringn {
+      bodyn
+   }
+}
+
+2)
+
+switch switchingString {
+   matchString1 {
+      body1
+      switch switchingString {
+         matchString1 {
+            body1
+         }
+         matchString2 {
+            body2
+         }
+         ...
+         matchStringn {
+            bodyn
+         }
+      }
+   }
+   matchString2 {
+      body2
+   }
+...
+   matchStringn {
+      bodyn
+   }
+}
+
+
+
+
+
+conditional operator ? : 
+
+Exp1 ? Exp2 : Exp3;
+
+example : set a 10;
+set b [expr $a == 1 ? 20: 30]
+puts "Value of b is $b\n"
+set b [expr $a == 10 ? 20: 30]
+puts "Value of b is $b\n" 
+
+
+
+
+loops :
+
+for {} {} {} {
+
+
+}
+
+foreach  index list  {
+
+}
+
+while {} { 
+
+
+}
+
+
+Procedures : are nothing but code blocks with series of commands that provide a specific reusable functionality.
+
+Procedures are equivalent to the functions used in many programming languages and are made available in Tcl with the help of proc command.
+
+
+type :
+
+proc procedureName {arguments} {
+   body
+}
+
+
+proc helloWorld {} {
+   puts "Hello, World!"
+}
+helloWorld
+
+proc add {a b} {
+   return [expr $a+$b]
+}
+
+proc add {a {b 100} } {
+   return [expr $a+$b]
+}
+puts [add 10 30]
+puts [add 10]
+
+
+
+A file represents a sequence of bytes, does not matter if it is a text file or binary file.
+
+open fileName accessMode(r,w,a,r+,w+,a+)
+
+close fileName
+
+
+set fp [open "input.txt" w+]
+puts $fp "test"
+close $fp
+
+Following is the simple command to read from a file -
+
+set file_data [read $fp]
+
+
+example:
+
+set fp [open "input.txt" w+]
+puts $fp "test"
+close $fp
+set fp [open "input.txt" r]
+set file_data [read $fp]
+puts $file_data
+close $fp
+
+

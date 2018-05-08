@@ -1,0 +1,23 @@
+#ISO file name without .iso extention.
+ISOFILE=debian-8.9.0-amd64-DVD-1
+
+# Any hostname and domain names assigned from dhcp take precedence over
+# values set here. However, setting the values still prevents the questions
+# from being shown, even if values come from dhcp.
+export  ROOTFS_HOSTNAME=OcNOS
+export  ROOTFS_DOMAINNAME=hackerspackers.com
+
+#change bridge name according to you
+export ROOTFS_BRIDGE=br0
+
+
+# If you prefer to configure the network manually, uncomment this line and
+# the static network configuration below.
+#export ROOTFS_DHCP=no
+
+# If you want the preconfiguration file to work on systems  without a dhcp server,
+#uncomment below lines and do the static network configuration.
+#export ROOTFS_NAMESERVER=10.12.10.10
+#export ROOTFS_IPADDRESS=10.12.3.142
+#export ROOTFS_NETMASK=255.255.255.0
+#export ROOTFS_GATEWAY=10.12.3.1

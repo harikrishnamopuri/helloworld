@@ -1,0 +1,6 @@
+07f0b11a06d804d6519c2a4b6d6b9064  ./preseed.cfg
+313cb0f85efe2897ee35f204c5012f70  ./md5sum.txt
+01c36dfaae0622c4aa20fd79dd512286  ./onie-packages.txt
+133ed1bba5fee537636930e33f86af8e  ./post-install.sh
+04ac7be99516cd0a7f8cbaa0f801aa1e  ./rootfsconfig
+3082e6211511912a54ba555bc3904be9  ./rootfs-template-creation.sh
