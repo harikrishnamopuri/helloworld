@@ -1,0 +1,3 @@
+
+- name: checking system is booted with latest image
+  shell: "uname -a | grep {{ image_version }}"

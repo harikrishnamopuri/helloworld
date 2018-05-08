@@ -1,0 +1,24 @@
+---
+- name: Find out playbook's path
+  local_action: shell  pwd
+  register: playbook_path_output
+
+- name: download image from url
+  unarchive:
+    src: "{{ image_url }}"
+    dest: "{{ playbook_path_output.stdout  }}/roles/linux-image-upgradation/files/"
+    remote_src: True
+  run_once: true
+  delegate_to: localhost
+
+- name: create temporary directory in agent 
+  file:  path="/tmp/new_image" state=directory mode=0755 
+
+- name: copying {{ facter_arch }} deb files  into /tmp/new_image
+  copy: src={{ item }}  dest="/tmp/new_image"
+  with_fileglob: "*{{ arch }}.deb"
+
+- name: installing deb package
+  shell: "dpkg -i /tmp/new_image/*{{ arch }}.deb"
+  register: dpkg_installed_result
+

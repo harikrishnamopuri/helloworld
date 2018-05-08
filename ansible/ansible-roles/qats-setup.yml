@@ -1,0 +1,8 @@
+---
+
+- hosts: qats-server
+  gather_facts: True
+
+  roles:
+  - qats-setup
+

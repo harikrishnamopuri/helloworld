@@ -1,0 +1,20 @@
+---
+# tasks file for linux-image-upgradation
+
+- include: image-roleback.yml
+  when: image_roleback == true
+
+- include: check-image-version.yml
+  when : image_upgrade == true
+
+- include: gather-sys-info.yml
+  when : dpkg_result.rc==1
+
+- include: image-upgrade.yml
+  when: dpkg_result.rc==1
+
+- include: reboot-system.yml
+  when: dpkg_installed_result.rc==0
+
+- include: check-system-rebooted-with-latest-img.yml
+  when: dpkg_installed_result.rc==0

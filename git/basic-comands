@@ -1,0 +1,51 @@
+#Creating Project
+git init --bare helloworld.git
+git clone ssh://url/helloworld
+git commit
+git push origin master:master
+
+#running git daemon
+nohup git daemon --base-path=. --export-all --reuseaddr --informative-errors --verbose &
+
+#creating branch
+git branch mcl
+git branch  -m mcl fcl
+git branch  -d fcl
+
+#creating branch from existing 
+git checkout mcl
+git checkout -b fcl
+
+#adding files to the index
+git add . ; # all tracked files
+git add <file> ; #untracked files
+
+#taking diff of last two commits 
+git status
+git diff HEAD~ HEAD
+git diff branch..newbranch -- filename
+
+#keeping files in stash 
+git stash
+git stash --apply
+git stash list 
+
+
+#configuring user name and mail
+git config user.name "Hari"
+git config user.email "hkrishna294@gmail.com"
+git config core.editor "vim"
+
+#commit changes
+git commit -a -m "message"
+git commit -amend --reset-author
+
+#fecthing and fulling changes
+git fetch <url>
+git pull
+
+#rebase 
+git rebase fcl mcl 
+
+
+

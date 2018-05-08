@@ -1,0 +1,33 @@
+Serever installation :
+
+
+Client installation :
+
+ 
+
+LDAP:
+
+LDAP HOST: ldap://DC01.comany.com
+
+Port : 369
+
+BASE DN  : DC=comany,DC=com
+
+Search Attribute : sAMAccountName
+
+BIND DN : HK\Hari.Mopuri
+
+
+SMTP: 
+
+SMTP server: "127.0.0.1", SMTP helo: "hostname.com", SMTP email: "mail@comany.com"
+
+https://devops.profitbricks.com/tutorials/configure-a-postfix-relay-through-gmail-on-centos-7/
+
+
+
+centos-5.5:
+
+rpm -ivh zabbix-agent-3.2.3-1.el5.x86_64.rpm
+
+iptables -I INPUT 1 -p tcp --dport 10050 -j ACCEPT

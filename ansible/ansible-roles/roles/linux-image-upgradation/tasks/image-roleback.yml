@@ -1,0 +1,21 @@
+---
+- name: checking system is booted with old image
+  shell: "uname -a | grep -v {{ image_version }}"
+  register: system_with_old_image
+  ignore_errors: True
+
+- name: exiting from playbook
+  meta: end_play
+  when: system_with_old_image.rc==0
+
+- name: uninstalling {{ image_roleback_debfiles }} deb package 
+  shell: "dpkg -P {{ image_roleback_debfiles }} "
+- name: print result
+  debug: msg="{{ image_roleback_debfiles }}  uninstalled"
+
+- include: reboot-system.yml
+
+- include: check-system-rebooted-with-old-img.yml
+
+- name: exiting from playbook
+  meta: end_play

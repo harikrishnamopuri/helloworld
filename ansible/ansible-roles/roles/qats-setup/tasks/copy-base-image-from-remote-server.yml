@@ -1,0 +1,24 @@
+---
+- name: Find out playbook's path
+  local_action: shell  pwd
+  register: playbook_path_output
+
+
+- name: Download qcow2 image
+  shell: "wget {{ image_url }} -O {{ playbook_path_output.stdout  }}/roles/qats-setup/files/{{ base_image }}.qcow2"
+  delegate_to: localhost
+
+- name: Find out playbook's path
+  shell: "qemu-img convert -f qcow2 -O raw {{ playbook_path_output.stdout  }}/roles/qats-setup/files/{{ base_image }}.qcow2 {{ playbook_path_output.stdout  }}/roles/qats-setup/files/{{ base_image }}.img"
+  delegate_to: localhost
+
+- name: create temporary image directory in agent
+  file:  path="/tmp/new_image" state=directory mode=0755
+
+- name: create temporary mount directory in agent
+  file:  path="/tmp/new_image/mount" state=directory mode=0755
+
+
+- name: copying img image files  into /tmp/new_image
+  copy: src={{ item }}  dest="/tmp/new_image"
+  with_fileglob: "*.img"

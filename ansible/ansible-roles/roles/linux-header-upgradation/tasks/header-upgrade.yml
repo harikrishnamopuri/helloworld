@@ -1,0 +1,26 @@
+---
+
+- name: Find out playbook's path
+  local_action: shell  pwd
+  register: playbook_path_output
+
+- name: download image from url
+  unarchive:
+    src: "{{ header_url }}"
+    dest: "{{ playbook_path_output.stdout  }}/roles/linux-header-upgradation/files/"
+    remote_src: True
+  run_once: true
+  delegate_to: localhost
+
+- name: create temporary directory in agent 
+  file:  path="/tmp/new_header" state=directory mode=0755 
+
+- name: copying {{ facter_arch }} deb files  into /tmp/new_header
+  copy: src={{ item }}  dest="/tmp/new_header"
+  with_fileglob: "*{{ arch }}.deb"
+
+- name: installing deb package
+  shell: "dpkg -i /tmp/new_header/*{{ arch }}.deb"
+
+- name: deb package installation
+  shell:  "dpkg -l | grep linux-header | grep {{ header_version }}"

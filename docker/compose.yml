@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+
+# Debian 8  generation
+  debian-test:
+    build: .
+    image: debian8-test
+    container_name: test
+    hostname: test
+    user: test
+    working_dir: /test
+    entrypoint:  tail -f /dev/null
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - "/dev/ttyS0:/dev/ttyS0"
+    volumes:
+      - test:/test
+
+volumes:
+  test:
+    external: true
+
+

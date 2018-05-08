@@ -1,0 +1,8 @@
+---
+- name : setting archtecture for debina8 32 bit machines
+  set_fact: arch={{ ansible_architecture }}
+            sys_arch={{ ansible_architecture  }}
+- name : setting archtecture for debina8 64 bit machines
+  set_fact: arch="amd64"
+            sys_arch={{ ansible_architecture  }}
+  when : ( ansible_architecture == 'x86_64' )

@@ -1,0 +1,35 @@
+---
+- hosts: '{{ hosts }}'
+  tasks:
+  - name: updating apt cache 
+    apt: update_cache=yes
+  - name: remove lxc-docker* docker.io* packages
+    apt: name=lxc-docker* state=absent
+    apt: name=docker.io state=absent  
+ 
+  - name: installing apt-transport-https  package
+    apt: name=apt-transport-https  state=latest
+
+  - name: installing ca-certificates  package
+    apt: name=ca-certificates  state=latest
+
+  - name: Add the new GPG key
+    apt_key: keyserver='hkp://p80.pool.sks-keyservers.net:80' id=58118E89F3A912897C070ADBF76221572C52609D
+  
+  - name:  adding https://apt.dockerproject.org/repo
+    shell: "echo 'deb https://apt.dockerproject.org/repo debian-jessie main' >  /etc/apt/sources.list.d/docker.list "
+
+  - name: updating apt cache
+    apt: update_cache=yes
+
+  - name: installing docker-engine  package
+    apt: name=docker-engine  state=latest
+
+  - name:  service docker restart
+    service: name=docker state=restarted
+  - name: docker pull
+    shell: "docker pull hello-world"
+  - name: docker pull
+    shell: "docker pull debian:8.2"
+  
+

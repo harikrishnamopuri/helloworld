@@ -1,0 +1,11 @@
+---
+# tasks file for qats-setup
+
+- include: copy-base-image-from-remote-server.yml
+
+- include: call-vpc-creation-steps.yml vpc_no={{ item }}
+  with_sequence: start={{ vpc_start_range }} end={{ vpc_end_range }}
+  loop_control:
+     loop_var: vpc_no
+- include: check-all-vpcs-up.yml vpc_no={{ item }}
+  with_sequence: start={{ vpc_start_range }} end={{ vpc_end_range }}

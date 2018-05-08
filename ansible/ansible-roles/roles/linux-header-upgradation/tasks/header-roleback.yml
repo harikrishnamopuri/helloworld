@@ -1,0 +1,7 @@
+---
+- name: uninstalling {{ header_roleback_debfiles }} deb package 
+  shell: "dpkg -P {{ header_roleback_debfiles }} "
+- name: print result
+  debug: msg="{{ header_roleback_debfiles }}  uninstalled"
+- name: exiting from playbook
+  meta: end_play

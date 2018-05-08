@@ -1,0 +1,6 @@
+---
+
+- hosts: docker-64
+  gather_facts: True
+  roles:
+  - docker-image-update

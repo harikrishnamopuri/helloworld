@@ -1,0 +1,15 @@
+- name : get IP address
+  set_fact: IP="[ {{ base_vpc_name | upper }}{{ vpc_no }}_IP ]"
+
+
+- name : format IP address
+  set_fact: IP="{{ IP | to_json | replace('[', '')  |  replace(']', '') | replace('\"', '') }}"
+
+
+- name: checking {{ base_vpc_name | upper }}{{ vpc_no }}  is reachable
+  wait_for:
+      host: "{{ IP }}"
+      port: 22
+      timeout: 300 # will try for 5 mins 
+      state: present
+

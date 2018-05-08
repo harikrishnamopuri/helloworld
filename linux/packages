@@ -1,0 +1,16 @@
+apt-get install unionfs-fuse  -y --force-yes
+sudo /usr/bin/unionfs-fuse -o cow,allow_other,suid,dev,nonempty /workdir1/=RW:/workdir2=RO /workdir
+
+
+apt-get install ssh  -y --force-yes
+mkdir -p /var/run/sshd
+
+
+cat << EOF>>  /etc/apt/sources.list
+deb http://deb.debian.org/debian jessie-backports main
+EOF
+
+apt-get update
+apt install -t jessie-backports  openjdk-8-jre-headless ca-certificates-java -y --force-yes
+
+
