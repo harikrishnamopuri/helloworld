@@ -1,0 +1,5 @@
+https://landscape.cncf.io/grouping=landscape&landscape=container-registries
+docker repo : harbor
+aptly repo  : https://www.aptly.info/doc/aptly/
+debian snapshot : snapshot.debian.org/archive/debian/20150906T111056Z
+
