@@ -1,0 +1,130 @@
+yum install libvirt-daemon-kvm qemu-kvm
+sudo usermod -a -G libvirt $(whoami)
+newgrp libvirt
+curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2 && chmod +x docker-machine-driver-kvm2 && sudo mv docker-machine-driver-kvm2 /usr/bin/
+minikube start --vm-driver kvm2 --alsologtostderr --memory 1024
+ 
+https://darkowlzz.github.io/post/minikube-config/
+
+https://kubernetes.io/docs/home/?path=browse
+
+
+curl -L https://github.com/docker/machine/releases/download/v0.14.0/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine &&
+    chmod +x /tmp/docker-machine &&
+    sudo cp /tmp/docker-machine /usr/local/bin/docker-machine
+curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.10.0/docker-machine-driver-kvm-centos7 > /usr/local/bin/docker-machine-driver-kvm \ 
+chmod +x /usr/local/bin/docker-machine-driver-kvm
+
+
+https://thenewstack.io/tutorial-run-multi-node-kubernetes-cluster-digitalocean/
+#working one:
+minikube start --vm-driver kvm --memory 2048
+kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.4 --port=8080
+kubectl expose deployment hello-minikube --type=NodePort
+kubectl get pod
+
+
+
+##############################
+apt-get update
+ apt-get install \
+     apt-transport-https \
+     ca-certificates \
+     curl \
+     gnupg2 \
+     software-properties-common
+	 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+	 apt-key fingerprint 0EBFCD88
+	 add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+   apt-get update
+   apt-get install docker-ce -y
+   
+   
+   
+   
+apt-get update && apt-get install -y apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+deb http://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+
+
+ kubeadm init --skip-preflight-checks
+#creating pod
+
+cat  pod-nginx.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.7.9
+    ports:
+    - containerPort: 80
+kubectl create -f pod-nginx.yaml
+kubectl get pod
+
+#get pod ip 
+kubectl get pod nginx -o go-template='{{.status.podIP}}'
+
+
+kubectl create -f deployment.yaml
+kubectl expose deployment nginx-service  --type=NodePort
+kubectl create -f service.yaml
+minikube service  nginx-deployment
+
+
+#
+
+Your Kubernetes master has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+You can now join any number of machines by running the following on each node
+as root:
+
+
+
+ kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
+
+ kubeadm join 10.12.25.81:6443 --token 7vvrzh.pic2r9m5h47axcq7 --discovery-token-ca-cert-hash sha256:3802c54ce2ad5c14a37dfdbc9082939edf9515e9c241bf436b371d6c40411980
+
+
+ http://10.12.25.81:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+
+
+
+Your Kubernetes master has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+You can now join any number of machines by running the following on each node
+as root:
+
+  kubeadm join 10.12.25.81:6443 --token 4j97oe.xvhuq088czhbkuy2 --discovery-token-ca-cert-hash sha256:a73bf0173ad24d54ccec78d2501d883613aab51eb2df77c0866a3b8ec0b8a5d0
+  kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
+  http://theremotelab.com/blog/achieving-ci-cd-with-k8s/#kubernetes-jenkins-plugin
+
