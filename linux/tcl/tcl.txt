@@ -351,4 +351,30 @@ set file_data [read $fp]
 puts $file_data
 close $fp
 
+expect :
 
+ expect {
+         -i ${device_id} -re  {#} {
+            return $SUCCESS
+         }
+         -i ${device_id} -re  {->} {
+            return $SUCCESS
+         }
+          -i ${device_id} -re "yes/no" {
+            send -i ${device_id} "yes\r"
+            after 100
+            exp_continue
+          }
+       -i ${device_id} -re {ogin:} {
+            send -i ${device_id} "$user\r"
+            after 100
+            set is_splat NO
+            exp_continue
+         }
+         -i ${device_id} -re {assword:} {
+            send -i ${device_id} "$pass\r"
+            after 100
+            exp_continue
+         }
+
+  }
