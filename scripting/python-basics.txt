@@ -107,3 +107,6 @@ d2 = {key1: value1, key2: value2, }
 d = {'aa': 111, 'bb': 222}
 for key in d.keys():
     print("d[key]:", d[key] )
+   
+Files:
+Open a file with the open factory method. Example:
