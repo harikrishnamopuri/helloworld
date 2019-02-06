@@ -96,4 +96,14 @@ In [7]: values = {'name': 'dave', 'hobby': 'birding'}
 In [8]: 'user: {name}  activity: {hobby}'.format(**values)
 Out[8]: 'user: dave  activity: birding
 
+Dictionaries
+A dictionary is a collection, whose values are accessible by key. It is a collection of name­value pairs.
 
+Keys must be immutable objects: ints, strings, tuples, ...
+Literals for constructing dictionaries:
+d1 = {}
+d2 = {key1: value1, key2: value2, }
+
+d = {'aa': 111, 'bb': 222}
+for key in d.keys():
+    print("d[key]:", d[key] )
