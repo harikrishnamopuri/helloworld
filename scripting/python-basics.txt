@@ -27,3 +27,39 @@ f(arguments...)           Function call
 {key:datum...}            Dictionary display
 `expressions...`          String conversion
 
+
+Built­in data­types:
+The numeric types are:
+● Plain integers ­­ Same precision as a C long, usually a 32­bit binary number.
+● Long integers ­­ Define with 100L. But, plain integers are automatically 
+promoted when needed.
+● Floats ­­ Implemented as a C double. Precision depends on your machine. See 
+sys.float_info.
+● Complex numbers ­­ Define with, for example, 3j or complex(3.0, 2.0).
+
+
+List ­­ A list is a dynamic array/sequence. It is ordered and indexable. A list is mutable.
+List constructors: [], list().
+range() and xrange():
+● range(n) creates a list of n integers. Optional arguments are the starting integer
+and a stride.
+● xrange is like range, except that it creates an iterator that produces the items 
+in the list of integers instead of the list itself.
+Tuples ­­ A tuple is a sequence. A tuple is immutable.
+Tuple constructors: (), but really a comma; also tuple().
+
+Operations on lists ­­ Operations similar to tuples plus:
+● Append ­­ mylist.append(newitem).
+● Insert ­­ mylist.insert(index, newitem). Note on efficiency: The 
+insert method is not as fast as the append method. If you find that you need 
+to do a large number of mylist.insert(0, obj) (that is, inserting at the 
+beginning of the list) consider using a deque instead. See: 
+http://docs.python.org/2/library/collections.html#collections.deque. Or, use 
+append and reverse.
+● Extend ­­ mylist.extend(anotherlist). Also can use + and +=.
+● Remove ­­ mylist.remove(item) and mylist.pop(). Note that 
+append() together with pop() implements a stack.
+● Delete ­­ del mylist[index].
+● Pop ­­ Get last (right­most) item and remove from list ­­ mylist.pop().
+List operators ­­ +, *, etc.
+
