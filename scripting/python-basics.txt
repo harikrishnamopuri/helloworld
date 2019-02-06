@@ -63,3 +63,37 @@ append() together with pop() implements a stack.
 ● Pop ­­ Get last (right­most) item and remove from list ­­ mylist.pop().
 List operators ­­ +, *, etc.
 
+
+Strings
+Strings are sequences. They are immutable. They are indexable. They are iterable.
+
+For operations on strings, see http://docs.python.org/lib/string­methods.html or use:
+>>> help(str)
+Or:
+>>> dir("abc")
+String operations (methods).
+String operators, e.g. +, <, <=, ==, etc..
+Constructors/literals:
+● Quotes: single and double. Escaping quotes and other special characters with a 
+back­slash.
+● Triple quoting ­­ Use triple single quotes or double quotes to define multi­line 
+strings.
+● str() ­­ The constructor and the name of the type/class.
+● 'aSeparator'.join(aList)
+● Many more.
+Escape characters in strings ­­ \t, \n, \\, etc.
+
+String formatting:
+%d ==> integer
+%s ==> string
+%f ==> float
+string formating examples:
+In [1]: 'aaa {1} bbb {0} ccc {1} ddd'.format('xx', 'yy', )
+Out[1]: 'aaa yy bbb xx ccc yy ddd'
+In [2]: 'number: {0:05d} ok'.format(25)
+Out[2]: 'number: 00025 ok'
+In [7]: values = {'name': 'dave', 'hobby': 'birding'}
+In [8]: 'user: {name}  activity: {hobby}'.format(**values)
+Out[8]: 'user: dave  activity: birding
+
+
