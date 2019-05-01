@@ -1,0 +1,17 @@
+#Basic Knowledge of aws 
+1. Amazon S3(simple storage service)
+2. Amazon Glacier
+3. Amazon EC2 (Elastic compute cloud)
+4. IAM (Identity access management)
+5. Amazon VPC(Virtual Provate Cloud)
+6. Amazon RDS (Releational database service)
+7. Amazon Cloud Watch
+8. Amazon Cloud formation
+9. Amazon elastic beanstalk
+10. Amazon Route 53
+11. Amazon Storage Gateway
+12. Amazon import/export
+13. Amazon DynanmoDB
+14. Accessing aws services
+15. Amazon simple queue service(SQ3)
+16. Amazon simple work flow(swf)
