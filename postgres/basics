@@ -1,0 +1,18 @@
+Ref: 
+https://linuxize.com/post/how-to-install-postgresql-on-debian-9/
+
+sudo apt install postgresql postgresql-contrib
+verification:
+sudo -u postgres psql -c "SELECT version();"
+Remote auth:
+/etc/postgresql/9.6/main/postgresql.conf
+password auth:
+/etc/postgresql/9.6/main/pg_hba.conf
+createrole:
+sudo su - postgres -c "createuser -RDIElPS gerrit2"
+#enter password
+createdb:
+sudo su - postgres -c "createdb -E UTF-8 -O gerrit2 reviewdb"
+testing with password
+sudo su - postgres
+psql -U gerrit2 reviewdb
