@@ -1,0 +1,4 @@
+cpu
+0.0
+memory
+svmem(total=1038729216, available=427925504, percent=58.8, used=447414272, free=79802368, active=686268416, inactive=166690816, buffers=30466048, cached=481046528, shared=3702784, slab=74661888)
