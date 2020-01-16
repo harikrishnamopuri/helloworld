@@ -1,0 +1,282 @@
+13.125.246.76
+Secret access key
+CJQ/4Jy+d/1fAstErcSewqN4pwkeLGwQZzM3/j9P
+
+hal config provider aws edit --access-key-id AKIAIQI537TGQDLJ4J5A --secret-access-key 
+hal config storage s3 edit \
+    --access-key-id  AKIAIQI537TGQDLJ4J5A \
+    --secret-access-key  \
+    --region ap-northeast-2
+	
+	
+	
+	--bucket ecs-test-2713 
+	
+	
+hal config storage edit --type s3
+hal config provider aws account add svoice-user   --account-id 534144745357   --assume-role role/spinnakerManaged  --regions  ap-northeast-2
+hal config provider aws enable
+VERSION=hal version list 
+hal config version edit --version $VERSION
+
+
+
+aws cloudformation deploy --stack-name spinnaker-managing-infrastructure-setup --template-file managing.yaml \
+--parameter-overrides UseAccessKeyForAuthentication=true --capabilities BaseIAMRole --region ap-northeast-2
+
+hal config provider aws account add spinnakertest   --account-id "064798645451"   --assume-role role/spinnakerManaged --default-key-pair spinnakertestkey --regions  ap-northeast-2
+
+aws  --region ap-northeast-2 cloudformation create-stack  --stack-name spinnaker-managing-infrastructure-setup  
+    --template-body managing.yaml 
+
+sudo hal config security ui edit \
+    --override-base-url http://13.125.246.76:9000
+
+sudo hal config security api edit \
+    --override-base-url http://13.125.246.76:8084
+
+hal config security authn oauth2 edit --pre-established-redirect-uri http://13.125.246.76:8084/login 
+
+http://54.180.155.167:8084/login 
+
+
+
+
+
+
+
+
+
+CLIENT_ID=a5bb36c7a89d7b407142
+CLIENT_SECRET=fb935cfb076999688b1f3804558333b4b551bfda
+PROVIDER=github
+
+sudo hal config security authn oauth2 edit \
+  --client-id $CLIENT_ID \
+  --client-secret $CLIENT_SECRET \
+  --provider $PROVIDER
+sudo hal config security authn oauth2 enable
+
+
+
+
+
+
+sudo hal config security ui edit \
+    --override-base-url http://35.229.41.79:9000
+
+sudo hal config security api edit \
+    --override-base-url http://35.229.41.79:8084
+	
+hal config security authn oauth2 edit --pre-established-redirect-uri http://35.229.41.79:8084/login
+
+    baseUrl: http://35.229.41.79:8084/webhooks/git/github
+
+######################	
+sudo hal config security ui edit --override-base-url http://18.224.32.155:9000
+sudo hal config security api edit  --override-base-url http://18.224.32.155:8084/login
+sudo hal config security authn oauth2 edit --pre-established-redirect-uri  http://18.224.32.155:8084/login
+
+sudo hal config security authn oauth2 edit --provider github   --client-id 7cda93f876cb7e1b950a --client-secret 75d6c811de5dfab6c3f7c4b5cb433b139a8f4a33
+sudo hal config security authn oauth2 enable
+sudo hal deploy apply 
+sudo hal deploy connect
+	
+	TOKEN=bc166e11e85a00855d4d0e5ecee16eda04612f45
+	ORG=techy-solutions-sre
+	sudo hal config security authz github edit \
+    --accessToken $TOKEN \
+    --organization $ORG \
+    --baseUrl https://api.github.com
+sudo hal config security authz edit --type github
+sudo hal config security authz enable
+	
+ACCESS_KEY_ID=AKIAIJYKBBRP3W3DPXVA
+secret-access-key=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
+ARN==>arn:aws:iam::534144745357:user/spinnaker
+
+hal config provider aws account add svoice-user   --account-id 534144745357   --assume-role user/spinnaker  --regions  ap-northeast-2
+
+sudo hal deploy apply
+sudo hal deploy connect
+
+
+
+
+---------------------------------------
+AKIAJK47NUHGWLCI6MXA 
+0U5gvUCKAKgiL+7YIqDxNIGLQvDOD7CN8POff6o
+
+AKIAJK47NUHGWLCI6MXA
++0U5gvUCKAKgiL+7YIqDxNIGLQvDOD7CN8POff6o
+
+
+ACCESS_KEY_ID=AKIAJK47NUHGWLCI6MXA
+AWS_SECRET_ACCESS_KEY=0U5gvUCKAKgiL+7YIqDxNIGLQvDOD7CN8POff6o
+hal config provider aws edit --access-key-id AKIAJK47NUHGWLCI6MXA --secret-access-key 
+
+AWS_ACCOUNT_NAME=spinnakertest
+ACCOUNT_ID=064798645451
+hal config provider aws account add $AWS_ACCOUNT_NAME \
+    --account-id ${ACCOUNT_ID} \
+    --assume-role role/spinnakerManaged \
+	--regions  ap-northeast-2 
+	
+YOUR_SECRET_KEY_ID=AKIAJYR7QCPPWPQP5MEQ
+REGION=ap-northeast-2
+	
+hal config storage s3 edit \
+    --access-key-id  AKIAJYR7QCPPWPQP5MEQ \
+    --secret-access-key  \
+    --region ap-northeast-2
+
+	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
+
+
+hal config deploy edit --type localdebian
+
+hal config provider aws account list
+hal config provider aws account  delete myawsaccount
+
+
+
+-----------------------------------------------
+ROle arn : arn:aws:iam::985635016868:role/DevSpinnakerManagedRole
+
+
+
+export AWS_ACCOUNT_NAME=aws-dev-1
+export ACCOUNT_ID=985635016868
+export ROLE_NAME=role/DevSpinnakerManagedRole
+
+hal config provider aws account add ${AWS_ACCOUNT_NAME} \
+    --account-id ${ACCOUNT_ID} \
+    --assume-role ${ROLE_NAME}
+
+export ACCESS_KEY_ID=AKIA6K7DM2CSJGDX55MM
+sudo hal config provider aws edit --access-key-id ${ACCESS_KEY_ID} \
+  --secret-access-key  
+  
+ export REGION=us-west-2
+sudo hal config storage s3 edit \
+    --access-key-id  ${ACCESS_KEY_ID}\
+    --secret-access-key \
+    --region $REGION
+  
+  
+  
+  
+sudo hal config security authn oauth2 edit --provider github \
+  --client-id 7cda93f876cb7e1b950a \
+  --client-secret 75d6c811de5dfab6c3f7c4b5cb433b139a8f4a33
+
+hal config security authn oauth2 enable
+
+
+
+export TOKEN=214a0919ed5543838106e36e1b4e8c931bef295e  
+export ORG=techy-solutions-sre      
+
+
+hal config security authz github edit \
+    --accessToken $TOKEN \
+    --organization $ORG \
+    --baseUrl https://api.github.com
+
+hal config security authz edit --type github
+
+export AWS_ACCOUNT_NAME=aws-dev-1
+export ACCOUNT_ID=985635016868
+export ROLE_NAME=role/DevSpinnakerManagedRole
+hal config provider aws account edit $ACCOUNT --add-read-permission admin  --add-write-permission admin 
+ 
+
+hal config security authz enable
+sudo hal config security ui edit --override-base-url http://13.59.39.3:9000
+sudo hal config security api edit  --override-base-url http://13.59.39.3:8084/login
+sudo hal config security authn oauth2 edit --pre-established-redirect-uri  http://13.59.39.3:8084/login
+
+####################################################################
+
+1  clear
+    2  cd /opt/spinnaker
+    3  ls
+    4  cd
+    5  cd .hal/
+    6  ls
+    7  cd default/
+    8  ls
+    9  ls profiles/
+   10  ls service-settings/
+   11  echo "host: 0.0.0.0" | tee     ~/.hal/default/service-settings/gate.yml     ~/.hal/default/service-settings/deck.yml
+   12  sudo hal deploy apply
+   13  sudo systemctl daemon-reload
+   14  netstat  -ntpl
+   15  sudo systemctl status spinnaker
+   16  watch netstat -nptl
+   17  journalctl -u front50.service
+   18  journalctl -fu front50.service
+   19  watch netstat -nptl
+   20  journalctl -fu front50.service
+   21  watch netstat -nptl
+   22  cat ~/.hal/config
+   23  cat /opt/spinnaker/config/clouddriver.yml
+   24  journalctl  -fu clouddriver.service
+   25  cd
+   26  cd /opt/
+   27  vim deck/html/settings
+   28  vim deck/html/settings.js
+   29  sudo vim deck/html/settings.js
+   30  sudo systemctl reestart apache2
+   31  sudo systemctl restart apache2
+   32  vi ~/.hal/config
+   33  history
+   34  sudo hal deploy apply
+   35  systemctl daemon-reload
+   36  sudo systemctl daemon-reload
+   37  history
+   38  sudo systemctl status spinnaker
+   39  netstat  -ntpl
+   40  cat ~/.hal/default/service-settings/deck.yml
+   41  cat deck/html/settings.js
+   42  netstat  -ntpl
+   43  vi deck/html/settings.js
+   44  sudo vi deck/html/settings.js
+   45  ls -a
+   46  history
+
+
+
+
+   
+export TOKEN=214a0919ed5543838106e36e1b4e8c931bef295e
+export ORG=techy-solutions-sre
+
+hal config security authz github edit \
+    --accessToken $TOKEN \
+    --organization $ORG \
+    --baseUrl https://api.github.com
+
+hal config security authz edit --type github
+
+hal config security authz enable
+
+
+
+curl -X POST \
+  -H "Content-type: application/json" \
+  -d '{ "name": "harikrishnamopuri", "memberOf": ["admin"] }' \
+  $FRONT50/serviceAccounts
+  
+  
+hal config provider kubernetes account add kubernetes-dev --provider-version v2 --context $(kubectl config current-context)
+hal config features edit --artifacts true
+
+
+
+hal config security ui edit \
+    --override-base-url http://54.214.125.191:9000
+
+hal config security api edit \
+    --override-base-url http://54.214.125.191:8084
+hal deploy apply
