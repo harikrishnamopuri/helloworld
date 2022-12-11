@@ -1,0 +1,31 @@
+######################################
+1. Two Sum
+######################################
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        pmap = {}
+        for i, n in enumerate(nums) :
+            diff = target - n
+            if diff in pmap:
+               return  [pmap[diff], i]
+            pmap[n] = i
+        retrun 
+        
+       
+#######################################
+2. Best Time to Buy and Sell Stock
+########################################
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        L,R = 0, 1
+        maxp = 0
+        while R < len(prices):
+            if prices[L] < prices[R]:
+                maxp = max(maxp, prices[R] - prices[L] )
+            else:
+                L = R
+
+            R = R + 1
+
+        return maxp 
