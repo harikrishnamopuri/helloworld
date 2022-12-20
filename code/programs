@@ -80,3 +80,27 @@ class Solution:
             currentsum += i
             maxsub = max(maxsub, currentsum)
         return maxsub
+  
+######################################
+6.Maximum Product Subarray
+Hint: dp: compute max and max-abs-val for each prefix subarr;
+Input: nums = [2,3,-2,4]
+Output: 6
+Explanation: [2,3] has the largest product 6.
+######################################
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        res = max(nums)
+        #print(type(res))
+        curMax, curMin = 1, 1
+        for n in nums:
+            if n == 0 :
+               curMax, curMin = 1, 1
+               continue
+            tmp = n * curMax
+            curMax = max( n * curMax, n * curMin, n)
+            curMin = min( tmp, n * curMin, n)
+            #print(type(curMax))
+            res = max(res , curMax)
+        return res
+
